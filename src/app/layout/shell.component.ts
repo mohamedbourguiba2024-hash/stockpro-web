@@ -10,7 +10,7 @@ import { AuthService } from '../core/auth.service';
 @Component({
   selector: 'app-shell',
   imports: [RouterOutlet, RouterLink, RouterLinkActive, MatSidenavModule, MatToolbarModule,
-            MatListModule, MatIconModule, MatButtonModule],
+    MatListModule, MatIconModule, MatButtonModule],
   template: `
     <mat-sidenav-container class="container">
       <mat-sidenav mode="side" opened class="sidenav">
@@ -19,6 +19,10 @@ import { AuthService } from '../core/auth.service';
           <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
             <mat-icon matListItemIcon>dashboard</mat-icon>
             <span matListItemTitle>Tableau de bord</span>
+          </a>
+          <a mat-list-item routerLink="/products" routerLinkActive="active">
+            <mat-icon matListItemIcon>inventory_2</mat-icon>
+            <span matListItemTitle>Produits</span>
           </a>
           <!-- Les autres liens (Produits, Mouvements, etc.) seront ajoutés au fur et à mesure -->
         </mat-nav-list>
