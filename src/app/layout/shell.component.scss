@@ -1,0 +1,32 @@
+:host { display: block; }
+.container { height: 100vh; background: var(--sp-bg); }
+
+.sidenav {
+  width: 250px;
+  background: var(--sp-navy);
+  border-right: none;
+  border-radius: 0;
+  // couleurs des liens sur fond sombre
+  --mat-list-list-item-label-text-color: rgba(255, 255, 255, 0.85);
+  --mat-list-list-item-leading-icon-color: rgba(255, 255, 255, 0.7);
+  --mat-list-list-item-hover-label-text-color: #fff;
+  --mat-list-list-item-hover-leading-icon-color: #fff;
+  --mat-list-list-item-focus-label-text-color: #fff;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; padding: 20px 16px; }
+.logo { width: 44px; height: 44px; border-radius: 50%; background: #fff; padding: 2px; box-sizing: border-box; }
+.brand-name { color: #fff; font-size: 1.25rem; font-weight: 600; letter-spacing: 0.5px; }
+
+mat-nav-list { padding: 8px 12px; }
+.active { background: var(--sp-blue) !important; border-radius: 10px; }
+.active, .active .mat-icon { color: #fff !important; }
+
+mat-toolbar { background: #fff; border-bottom: 1px solid var(--sp-border); height: 64px; }
+.spacer { flex: 1; }
+.user { display: flex; align-items: center; gap: 8px; margin-right: 16px; color: var(--sp-navy); }
+.user-info { display: flex; flex-direction: column; line-height: 1.2; }
+.user-email { font-size: 0.85rem; font-weight: 500; }
+.user-role { font-size: 0.7rem; color: var(--sp-text-muted); letter-spacing: 0.5px; }
+
+.content { padding: 28px 32px; }

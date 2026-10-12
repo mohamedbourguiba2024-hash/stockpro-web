@@ -1,5 +1,22 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: min(560px, 85vw);
+  padding-top: 8px;
+}
 
-    .content { display: flex; flex-direction: column; gap: 4px; min-width: min(480px, 80vw); padding-top: 8px; }
-    .row { display: flex; gap: 12px; }
-    .row mat-form-field { flex: 1; }
-    .hint { margin: 0 0 16px; opacity: 0.7; }
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.row mat-form-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.hint {
+  margin: 0 0 16px;
+  opacity: 0.7;
+}

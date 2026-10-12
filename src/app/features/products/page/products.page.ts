@@ -1,6 +1,6 @@
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CurrencyPipe } from '@angular/common';
+import {  DecimalPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -22,7 +22,7 @@ import { ProductDialogComponent } from '../product-dialog/product-dialog.compone
 
 @Component({
   selector: 'app-products-page',
-  imports: [ReactiveFormsModule, CurrencyPipe, MatTableModule, MatPaginatorModule, MatSortModule,
+  imports: [ReactiveFormsModule, DecimalPipe, MatTableModule, MatPaginatorModule, MatSortModule,
             MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatButtonModule,
             MatIconModule, MatChipsModule, MatDialogModule, MatSnackBarModule],
   templateUrl:'./products.page.html',
