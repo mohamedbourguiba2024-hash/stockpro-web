@@ -15,107 +15,18 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { ApiService } from '../../core/api.service';
-import { AuthService } from '../../core/auth.service';
-import { Category, Product, ProductRequest, Supplier } from '../../core/models';
-import { ProductDialogComponent } from './product-dialog.component';
+import { ApiService } from '../../../core/api.service';
+import { AuthService } from '../../../core/auth.service';
+import { Category, Product, ProductRequest, Supplier } from '../../../core/models';
+import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 
 @Component({
   selector: 'app-products-page',
   imports: [ReactiveFormsModule, CurrencyPipe, MatTableModule, MatPaginatorModule, MatSortModule,
             MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatButtonModule,
             MatIconModule, MatChipsModule, MatDialogModule, MatSnackBarModule],
-  template: `
-    <div class="header">
-      <h1>Produits</h1>
-      <div class="actions">
-        <button mat-stroked-button (click)="export()"><mat-icon>download</mat-icon> Export CSV</button>
-        @if (auth.isAdmin()) {
-          <button mat-flat-button (click)="openDialog(null)"><mat-icon>add</mat-icon> Nouveau produit</button>
-        }
-      </div>
-    </div>
-
-    <div class="filters">
-      <mat-form-field appearance="outline" class="search">
-        <mat-label>Rechercher (nom ou référence)</mat-label>
-        <input matInput [formControl]="search" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Catégorie</mat-label>
-        <mat-select [formControl]="category">
-          <mat-option [value]="null">Toutes</mat-option>
-          @for (c of categories(); track c.id) {
-            <mat-option [value]="c.id">{{ c.nom }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <mat-checkbox [formControl]="lowStock">Stock bas uniquement</mat-checkbox>
-    </div>
-
-    <div class="table-wrap">
-      <table mat-table [dataSource]="rows()" matSort (matSortChange)="onSort($event)"
-             matSortActive="nom" matSortDirection="asc">
-        <ng-container matColumnDef="reference">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Référence</th>
-          <td mat-cell *matCellDef="let p">{{ p.reference }}</td>
-        </ng-container>
-        <ng-container matColumnDef="nom">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
-          <td mat-cell *matCellDef="let p">{{ p.nom }}</td>
-        </ng-container>
-        <ng-container matColumnDef="categoryNom">
-          <th mat-header-cell *matHeaderCellDef>Catégorie</th>
-          <td mat-cell *matCellDef="let p">{{ p.categoryNom ?? '—' }}</td>
-        </ng-container>
-        <ng-container matColumnDef="supplierNom">
-          <th mat-header-cell *matHeaderCellDef>Fournisseur</th>
-          <td mat-cell *matCellDef="let p">{{ p.supplierNom ?? '—' }}</td>
-        </ng-container>
-        <ng-container matColumnDef="prix">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Prix</th>
-          <td mat-cell *matCellDef="let p">{{ p.prix | currency: 'TND ':'code':'1.2-2' }}</td>
-        </ng-container>
-        <ng-container matColumnDef="quantite">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité</th>
-          <td mat-cell *matCellDef="let p">
-            {{ p.quantite }}
-            @if (p.stockBas) { <span class="badge">Stock bas</span> }
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let p">
-            <button mat-icon-button (click)="openDialog(p)" aria-label="Modifier"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button (click)="remove(p)" aria-label="Supprimer"><mat-icon>delete</mat-icon></button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="columns()"></tr>
-        <tr mat-row *matRowDef="let row; columns: columns()"></tr>
-        <tr class="mat-row" *matNoDataRow>
-          <td class="empty" [attr.colspan]="columns().length">Aucun produit trouvé</td>
-        </tr>
-      </table>
-    </div>
-
-    <mat-paginator [length]="total()" [pageSize]="size" [pageIndex]="page"
-                   [pageSizeOptions]="[5, 10, 25, 50]" (page)="onPage($event)" />
-  `,
-  styles: `
-    :host { display: block; }
-    .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .actions { display: flex; gap: 8px; }
-    .filters { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
-    .search { min-width: 280px; }
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; }
-    .empty { text-align: center; padding: 24px; opacity: 0.7; }
-    .badge { margin-left: 8px; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;
-             background: #fde7e9; color: #b3261e; }
-  `
+  templateUrl:'./products.page.html',
+  styleUrl:'./products.page.scss'
 })
 export class ProductsPage implements OnInit {
   private api = inject(ApiService);
