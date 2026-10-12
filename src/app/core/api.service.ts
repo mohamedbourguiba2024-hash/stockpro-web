@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Category, Movement, MovementRequest, MovementType, Page, Product, ProductRequest, Supplier } from './models';
+import { Category, DashboardStats, Movement, MovementRequest, MovementType, Page, Product, ProductRequest, Supplier } from './models';
 export interface MovementQuery {
   productId?: number | null;
   type?: MovementType | null;
@@ -69,4 +69,7 @@ export class ApiService {
   productOptions() {
     return this.products({ page: 0, size: 100, sort: 'nom', dir: 'asc' });
   }
+
+  dashboard() { return this.http.get<DashboardStats>(`${this.base}/dashboard/stats`); }
+  lowStock() { return this.http.get<Product[]>(`${this.base}/products/low-stock`); }
 }

@@ -1,1 +1,87 @@
-<h1>Tableau de bord</h1><p>Connexion réussie. Les graphiques arrivent à l'étape suivante.</p>
+<div class="page-header">
+  <div>
+    <h1>Tableau de bord</h1>
+    <p class="page-subtitle">Vue d'ensemble de votre stock</p>
+  </div>
+  <a mat-flat-button routerLink="/movements"><mat-icon>swap_vert</mat-icon> Nouveau mouvement</a>
+</div>
+
+@if (loading()) {
+  <p class="state">Chargement...</p>
+} @else if (error() || !stats()) {
+  <p class="state error">Impossible de charger le tableau de bord. Vérifiez que l'API tourne.</p>
+} @else {
+  @let s = stats()!;
+
+  <div class="cards">
+    <div class="panel card">
+      <div class="icon blue"><mat-icon>payments</mat-icon></div>
+      <div>
+        <span class="label">Valeur du stock</span>
+        <span class="value">{{ s.valeurTotaleStock | number: '1.3-3' }} DT</span>
+      </div>
+    </div>
+
+    <div class="panel card">
+      <div class="icon navy"><mat-icon>inventory_2</mat-icon></div>
+      <div>
+        <span class="label">Produits</span>
+        <span class="value">{{ s.nombreProduits }}</span>
+      </div>
+    </div>
+
+    <div class="panel card">
+      <div class="icon red"><mat-icon>warning</mat-icon></div>
+      <div>
+        <span class="label">Sous le seuil d'alerte</span>
+        <span class="value" [class.alert]="s.produitsSousSeuil > 0">{{ s.produitsSousSeuil }}</span>
+      </div>
+    </div>
+
+    <div class="panel card">
+      <div class="icon green"><mat-icon>swap_vert</mat-icon></div>
+      <div>
+        <span class="label">30 derniers jours</span>
+        <span class="value small">
+          <span class="pos">+{{ s.entrees30Jours }}</span> /
+          <span class="neg">−{{ s.sorties30Jours }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="panel">
+      <h2>Mouvements des 30 derniers jours</h2>
+      @if (movementsChart(); as cfg) { <app-chart [config]="cfg" /> }
+    </div>
+    <div class="panel">
+      <h2>Stock par catégorie</h2>
+      @if (categoryChart(); as cfg) { <app-chart [config]="cfg" /> }
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Produits à réapprovisionner</h2>
+    @if (lowStock().length === 0) {
+      <p class="state">Tous les produits sont au-dessus de leur seuil.</p>
+    } @else {
+      <table class="simple">
+        <thead>
+          <tr><th>Référence</th><th>Produit</th><th>Fournisseur</th><th>Stock</th><th>Seuil</th></tr>
+        </thead>
+        <tbody>
+          @for (p of lowStock(); track p.id) {
+            <tr>
+              <td><strong>{{ p.reference }}</strong></td>
+              <td>{{ p.nom }}</td>
+              <td>{{ p.supplierNom ?? '—' }}</td>
+              <td class="neg">{{ p.quantite }}</td>
+              <td>{{ p.seuilAlerte }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+}

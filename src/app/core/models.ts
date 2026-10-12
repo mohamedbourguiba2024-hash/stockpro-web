@@ -63,3 +63,12 @@ export interface MovementRequest {
   quantite: number;
   commentaire: string | null;
 }
+export interface DashboardStats {
+  valeurTotaleStock: number;
+  nombreProduits: number;
+  produitsSousSeuil: number;
+  entrees30Jours: number;
+  sorties30Jours: number;
+  mouvementsParJour: { date: string; entrees: number; sorties: number }[];
+  stockParCategorie: { categorie: string; quantite: number }[];
+}
