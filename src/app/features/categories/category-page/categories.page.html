@@ -1,0 +1,38 @@
+<div class="page-header">
+  <div>
+    <h1>Catégories</h1>
+    <p class="page-subtitle">{{ rows().length }} catégorie(s)</p>
+  </div>
+  @if (auth.isAdmin()) {
+    <button mat-flat-button (click)="openDialog(null)"><mat-icon>add</mat-icon> Nouvelle catégorie</button>
+  }
+</div>
+
+<div class="panel filters">
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search">
+    <mat-label>Rechercher</mat-label>
+    <input matInput [formControl]="search" />
+  </mat-form-field>
+</div>
+
+<div class="panel table-wrap">
+  <table mat-table [dataSource]="filtered()">
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let c">{{ c.nom }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let c" class="actions-cell">
+        <button mat-icon-button (click)="openDialog(c)" aria-label="Modifier"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button (click)="remove(c)" aria-label="Supprimer"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns()"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="empty" [attr.colspan]="columns().length">Aucune catégorie trouvée</td>
+    </tr>
+  </table>
+</div>

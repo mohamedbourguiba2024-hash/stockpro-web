@@ -72,3 +72,11 @@ export interface DashboardStats {
   mouvementsParJour: { date: string; entrees: number; sorties: number }[];
   stockParCategorie: { categorie: string; quantite: number }[];
 }
+export interface CategoryRequest { nom: string; }
+
+export interface SupplierRequest {
+  nom: string;
+  telephone: string | null;
+  email: string | null;
+  adresse: string | null;
+}

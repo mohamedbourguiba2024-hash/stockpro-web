@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{ data.category ? 'Modifier la catégorie' : 'Nouvelle catégorie' }}</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="content">
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" />
+      @if (form.controls.nom.invalid) { <mat-error>Obligatoire (100 max)</mat-error> }
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Annuler</button>
+    <button mat-flat-button type="submit" [disabled]="form.invalid">Enregistrer</button>
+  </mat-dialog-actions>
+</form>

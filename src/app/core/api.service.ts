@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Category, DashboardStats, Movement, MovementRequest, MovementType, Page, Product, ProductRequest, Supplier } from './models';
+import { Category, CategoryRequest, DashboardStats, Movement, MovementRequest, MovementType, Page, Product, ProductRequest, Supplier, SupplierRequest } from './models';
 export interface MovementQuery {
   productId?: number | null;
   type?: MovementType | null;
@@ -72,4 +72,12 @@ export class ApiService {
 
   dashboard() { return this.http.get<DashboardStats>(`${this.base}/dashboard/stats`); }
   lowStock() { return this.http.get<Product[]>(`${this.base}/products/low-stock`); }
+
+  createCategory(body: CategoryRequest) { return this.http.post<Category>(`${this.base}/categories`, body); }
+updateCategory(id: number, body: CategoryRequest) { return this.http.put<Category>(`${this.base}/categories/${id}`, body); }
+deleteCategory(id: number) { return this.http.delete<void>(`${this.base}/categories/${id}`); }
+
+createSupplier(body: SupplierRequest) { return this.http.post<Supplier>(`${this.base}/suppliers`, body); }
+updateSupplier(id: number, body: SupplierRequest) { return this.http.put<Supplier>(`${this.base}/suppliers/${id}`, body); }
+deleteSupplier(id: number) { return this.http.delete<void>(`${this.base}/suppliers/${id}`); }
 }

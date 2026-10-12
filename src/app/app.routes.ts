@@ -1,3 +1,4 @@
+import { CategoriesPage } from './features/categories/category-page/categories.page';
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth.guards';
 import { ShellComponent } from './layout/shell.component';
@@ -12,6 +13,14 @@ export const routes: Routes = [
     component: ShellComponent,
     canActivate: [authGuard],
     children: [
+      {
+        path: 'categories',
+        loadComponent: () => import('./features/categories/category-page/categories.page').then(m => m.CategoriesPage)
+      },
+      {
+        path: 'suppliers',
+        loadComponent: () => import('./features/suppliers/supplier-page/suppliers.page').then(m => m.SuppliersPage)
+      },
       {
         path: 'dashboard',
         loadComponent: () => import('./features/dashboard/dashboard.page').then(m => m.DashboardPage)

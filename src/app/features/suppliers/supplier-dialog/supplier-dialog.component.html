@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{ data.supplier ? 'Modifier le fournisseur' : 'Nouveau fournisseur' }}</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="content">
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" />
+      @if (form.controls.nom.invalid) { <mat-error>Obligatoire (150 max)</mat-error> }
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Téléphone</mat-label>
+        <input matInput formControlName="telephone" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        @if (form.controls.email.invalid) { <mat-error>Email invalide</mat-error> }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Adresse</mat-label>
+      <input matInput formControlName="adresse" />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Annuler</button>
+    <button mat-flat-button type="submit" [disabled]="form.invalid">Enregistrer</button>
+  </mat-dialog-actions>
+</form>
